@@ -17,7 +17,7 @@ function GameClient(config) {
     this.socket.on('err', this.onErr.bind(this));
     this.socket.on('connect', this.onConnect.bind(this));
     this.socket.on('disconnect', this.onDisconnect.bind(this));
-    this.socket.on('cashed_out', this.onCashedOut.bind(this));
+    this.socket.on('game_crash', this.onGameCrash.bind(this));
 
     //this.socket.on('join', this.onJoin.bind(this));
 }
@@ -56,14 +56,8 @@ GameClient.prototype.onJoin = function(data) {
     this.emit('join', data);
 };
 
-GameClient.prototype.onCashedOut = function(data) {
-    /* Example:
-        { 
-            "username":"Steve",
-            "stopped_at":2097
-        }
-    */
-    this.emit('cashed_out', data);
+GameClient.prototype.onGameCrash = function(data) {
+    this.emit('game_crash', data);
 };
 
 // Get a one time token from the server to join the game.
