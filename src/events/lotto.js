@@ -42,20 +42,26 @@ module.exports = {
                     }
                     
                     if((new Date()).getUTCMinutes() > 1){
-				        require("../bot.js").lotto.canDraw = true;
+                        require("../bot.js").lotto.canDraw = true;
                     }
                 }, 1000)
             };
             console.log("[Lotto] Starting the lotto -> Pot: "+require("../bot.js").lotto.pot+" Bits | Cashout: "+require("../bot.js").lotto.cashout+".00x");
         }else{
-            var username = data.username,
-                cashout = data.stopped_at/100;
-            
-            if(cashout > require("../bot.js").lotto.cashout){
-                if(require("../bot.js").lotto.users.indexOf(username) <= -1){
-                    require("../bot.js").lotto.users.push(username);
-                    console.log("[Lotto] Users in lotto: "+require("../bot.js").lotto.users.length);
-                }
+            if(typeof data.cashouts !== "undefined"){
+                var cashouts = data.cashouts;
+                
+                _.forEach(cashouts, function(stopped_at, user) {
+                    var username = user,
+                        cashout = stopped_at/100;
+                    
+                    if(cashout > require("../bot.js").lotto.cashout){
+                        if(require("../bot.js").lotto.users.indexOf(username) <= -1){
+                            require("../bot.js").lotto.users.push(username);
+                            console.log("[Lotto] Users in lotto: "+require("../bot.js").lotto.users.length);
+                        }
+                    }
+                });
             }
         }
     }

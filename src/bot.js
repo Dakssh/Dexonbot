@@ -29,8 +29,8 @@ function DexonBot(){
     self.gameClient = new GameClient(self.Config);
     
     // Player cashed out
-    self.gameClient.on('cashed_out', function(bet){
-        require("./events/lotto.js").exec(bet);
+    self.gameClient.on('game_crash', function(data){
+        require("./events/lotto.js").exec(data);
     });
     
     // Connect to the web server.
