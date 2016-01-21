@@ -6,12 +6,14 @@
 -----------------*/
 module.exports.spamList = [];
 module.exports.lotto;
+module.exports.raffle;
 
 /* EVENTS
 -----------------*/
-require("./events/ip.js").exec({initialize: true});
+//require("./events/ip.js").exec({initialize: true});
 require("./events/lotto.js").exec({initialize: true});
 require("./events/reminders.js").exec({initialize: true});
+require("./events/raffle.js").exec({initialize: true});
 
 /* BOT
 -----------------*/
@@ -78,6 +80,9 @@ function DexonBot(){
                     break;
                 case "8ball":
                     require("./cmds/8ball.js").exec(data);
+                    break;
+                case "raffle":
+                    require("./cmds/raffle.js").exec(data);
                     break;
             }
         }catch(e){
